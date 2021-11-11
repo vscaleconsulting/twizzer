@@ -95,6 +95,8 @@ class VscaleTwitterBot():
     
     '''
       fills instance variables with spreadsheet tweetlinks and  result_worksheet with worksheet[1] object
+      scrapped_till -> count of links scrapped/row, used to fetched newly append links after
+                        this row
     '''
     gsheet = self.gc.open_by_url(self.spreadsheet_url)
     spreadsheet_response = gsheet.values_get(f"Form Responses 1!E{self.scraped_till}:E")
@@ -135,6 +137,10 @@ class VscaleTwitterBot():
     return  
     
   def run_twizzer(self):
+    
+    '''
+      twizzer -> main method of the instance, help's bot in running infinitely 
+    '''
     
     while True:
       self.scrape_tweets()
