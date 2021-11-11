@@ -17,6 +17,7 @@ class VscaleTwitterBot():
     '''
     self.tweet_links = []
     self.result_worksheet = None #result worksheet object
+    self.scraped_till = 2
     
     self.spreadsheet_url = spreadsheet_url
     self.gc = gspread.service_account(filename=gc_credential_file_name)
@@ -96,19 +97,27 @@ class VscaleTwitterBot():
       fills instance variables with spreadsheet tweetlinks and  result_worksheet with worksheet[1] object
     '''
     gsheet = self.gc.open_by_url(self.spreadsheet_url)
+    spreadsheet_response = gsheet.values_get(f"Form Responses 1!E{self.scraped_till}:E")
     
-    self.tweet_links = gsheet.worksheets()[0].col_values(5)[1:] #first element is column name
-    self.result_worksheet = gsheet.worksheets()[1]    
+    if 'values' in spreadsheet_response:        
+      self.scraped_till += len(spreadsheet_response)-1
+      self.tweet_links = spreadsheet_response['values']
+      self.result_worksheet = gsheet.worksheets()[1]    
+      return 
       
-  
+    return "no values"
+    
   def scrape_tweets(self):    
    
-    self.get_spreadsheet() #fetch sheets to instance variables
+    if(self.get_spreadsheet()=="no values"): #fetch sheets to instance variables
+      print("no new values appended")
+      return 
     
     api_call_counts = 0
     try:
       for link in self.tweet_links[:9]:
-        scrapped_values = self.binder(link)
+        scrapped_values = self.binder(link[0])
+        # print(scrapped_values)
         self.result_worksheet.append_row(scrapped_values)
       
         if api_call_counts==900:
@@ -121,8 +130,17 @@ class VscaleTwitterBot():
         api_call_counts+=1
         
     except Exception as e:
-      print(e)
-      return 
+      print(e,"exception froms scrape tweets method")
+    
+    return  
+    
+  def run_twizzer(self):
+    
+    while True:
+      self.scrape_tweets()
+      time.sleep(15)
+    
+    
      
    
 consumer_key = "hvJ3Mc5hfuw6FbuW0GwsrNail"
@@ -130,9 +148,9 @@ consumer_secret = "77g1My9L2oEyzY137okPsRAlB2hOjkLulyxZRJ00lbVMY8NKwe"
 callback_uri = "oob"
         
 spredsheet_url = "https://docs.google.com/spreadsheets/d/1PoAJO-u_WQKgPWO478rduiss6ooYMqitqxdE-LZzJkc/edit?usp=sharing"
-bot = VscaleTwitterBot("twitter_bot/cred.json",spredsheet_url,consumer_key,consumer_secret,callback_uri)        
+bot = VscaleTwitterBot("twizzer/cred.json",spredsheet_url,consumer_key,consumer_secret,callback_uri)        
 
-bot.scrape_tweets()
+bot.run_twizzer()
    
 
 
