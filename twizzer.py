@@ -1,6 +1,5 @@
 import tweepy
 import gspread
-import requests
 import time
 
 
@@ -119,7 +118,7 @@ class VscaleTwitterBot():
     try:
       for link in self.tweet_links[:9]:
         scrapped_values = self.binder(link[0])
-        # print(scrapped_values)
+        print(scrapped_values)
         self.result_worksheet.append_row(scrapped_values)
       
         if api_call_counts==900:
@@ -132,7 +131,7 @@ class VscaleTwitterBot():
         api_call_counts+=1
         
     except Exception as e:
-      print(e,"exception froms scrape tweets method")
+      print(e,"exception from scrape tweets method")
     
     return  
     
@@ -144,16 +143,19 @@ class VscaleTwitterBot():
     
     while True:
       self.scrape_tweets()
-      time.sleep(15)
+      time.sleep(1)
     
-    
-     
-   
-consumer_key = "hvJ3Mc5hfuw6FbuW0GwsrNail"
-consumer_secret = "77g1My9L2oEyzY137okPsRAlB2hOjkLulyxZRJ00lbVMY8NKwe"
-callback_uri = "oob"
-        
-spredsheet_url = "https://docs.google.com/spreadsheets/d/1PoAJO-u_WQKgPWO478rduiss6ooYMqitqxdE-LZzJkc/edit?usp=sharing"
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+
+consumer_key = os.getenv('consumer_key')
+consumer_secret = os.getenv('consumer_secret')
+callback_uri = os.getenv('callback_uri')   
+spredsheet_url = os.getenv('spredsheet_url') 
+
+
 bot = VscaleTwitterBot("twizzer/cred.json",spredsheet_url,consumer_key,consumer_secret,callback_uri)        
 
 bot.run_twizzer()
