@@ -113,22 +113,21 @@ class VscaleTwitterBot():
    
     if(self.get_spreadsheet()=="no values"): #fetch sheets to instance variables
       print("no new values appended")
-     
       return 
     
-  
+    api_call_counts = 0
     try:
       for link in self.tweet_links:
         scrapped_values = self.binder(link[0])
         # print(scrapped_values)
         self.result_worksheet.append_row(scrapped_values)
-        time.sleep(1.5)
       
+        time.sleep(1.5)
+        
+        api_call_counts+=1
         
     except Exception as e:
       print(e,"exception from scrape tweets method")
-     
-     
     
     return  
     
@@ -141,13 +140,8 @@ class VscaleTwitterBot():
     while True:
       self.scrape_tweets()
       print("method got crashed. running again")
-      with open("logs.txt",'a') as f:
-        f.write("method got crashed. running again")
-        f.write("\n")
       
-        
-    print("1st loop crashed")
-    
+    print("loop crashed")  
     
 
 import config 
@@ -160,10 +154,10 @@ consumer_secret = config.consumer_secret
 callback_uri = config.callback_uri  
 spredsheet_url = config.spredsheet_url
 
+
 bot = VscaleTwitterBot("cred.json",spredsheet_url,consumer_key,consumer_secret,callback_uri)        
 
 bot.run_twizzer()
-
    
 
 
