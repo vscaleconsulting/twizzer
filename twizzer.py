@@ -17,7 +17,7 @@ class VscaleTwitterBot():
     '''
     self.tweet_links = []
     self.result_worksheet = None #result worksheet object
-    self.scraped_till = 2
+    self.scraped_till = 54
     
     self.spreadsheet_url = spreadsheet_url
     self.gc = gspread.service_account(filename=gc_credential_file_name)
