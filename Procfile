@@ -1,1 +1,1 @@
-
+worker: python twizzer.py
