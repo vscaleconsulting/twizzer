@@ -106,8 +106,6 @@ class VscaleTwitterBot():
       self.scraped_till += len(spreadsheet_response)-1
       self.tweet_links = spreadsheet_response['values']
       self.result_worksheet = gsheet.worksheets()[1]    
-      print(self.scraped_till)
-      sys.stdout.flush()
       return 
       
     return "no values"
@@ -116,7 +114,10 @@ class VscaleTwitterBot():
    
     if(self.get_spreadsheet()=="no values"): #fetch sheets to instance variables
       print("no new values appended")
-      sys.stdout.flush()
+      
+      with open("logs.txt",'a') as f:
+        f.write("no new values appended")
+        f.write("\n")
       return 
     
   
@@ -130,7 +131,10 @@ class VscaleTwitterBot():
         
     except Exception as e:
       print(e,"exception from scrape tweets method")
-      sys.stdout.flush()
+      with open("logs.txt",'a') as f:
+        f.write(f"{e} exception from scrape tweets method")
+        f.write("\n")
+     
     
     return  
     
@@ -143,10 +147,16 @@ class VscaleTwitterBot():
     while True:
       self.scrape_tweets()
       print("method got crashed. running again")
-      sys.stdout.flush()
+      with open("logs.txt",'a') as f:
+        f.write("method got crashed. running again")
+        f.write("\n")
+      
         
     print("1st loop crashed")
-    sys.stdout.flush()
+    with open("logs.txt",'a') as f:
+        f.write("1st loop crashed")
+        f.write("\n")
+   
     
 
 import config 
