@@ -1,7 +1,6 @@
 import tweepy
 import gspread
 import time
-import sys
 
 
 class VscaleTwitterBot():
