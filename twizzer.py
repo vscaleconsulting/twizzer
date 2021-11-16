@@ -113,10 +113,7 @@ class VscaleTwitterBot():
    
     if(self.get_spreadsheet()=="no values"): #fetch sheets to instance variables
       print("no new values appended")
-      
-      with open("logs.txt",'a') as f:
-        f.write("no new values appended")
-        f.write("\n")
+     
       return 
     
   
@@ -130,9 +127,7 @@ class VscaleTwitterBot():
         
     except Exception as e:
       print(e,"exception from scrape tweets method")
-      with open("logs.txt",'a') as f:
-        f.write(f"{e} exception from scrape tweets method")
-        f.write("\n")
+     
      
     
     return  
@@ -152,10 +147,7 @@ class VscaleTwitterBot():
       
         
     print("1st loop crashed")
-    with open("logs.txt",'a') as f:
-        f.write("1st loop crashed")
-        f.write("\n")
-   
+    
     
 
 import config 
@@ -168,10 +160,6 @@ consumer_secret = config.consumer_secret
 callback_uri = config.callback_uri  
 spredsheet_url = config.spredsheet_url
 
-#clear heroku logs
-with open("logs.txt","w") as f:
-  f.write(" ")
-  
 bot = VscaleTwitterBot("cred.json",spredsheet_url,consumer_key,consumer_secret,callback_uri)        
 
 bot.run_twizzer()
