@@ -1,6 +1,7 @@
 import tweepy
 import gspread
 import time
+import sys
 
 
 class VscaleTwitterBot():
@@ -106,6 +107,7 @@ class VscaleTwitterBot():
       self.tweet_links = spreadsheet_response['values']
       self.result_worksheet = gsheet.worksheets()[1]    
       print(self.scraped_till)
+      sys.stdout.flush()
       return 
       
     return "no values"
@@ -114,6 +116,7 @@ class VscaleTwitterBot():
    
     if(self.get_spreadsheet()=="no values"): #fetch sheets to instance variables
       print("no new values appended")
+      sys.stdout.flush()
       return 
     
   
@@ -127,6 +130,7 @@ class VscaleTwitterBot():
         
     except Exception as e:
       print(e,"exception from scrape tweets method")
+      sys.stdout.flush()
     
     return  
     
@@ -139,8 +143,10 @@ class VscaleTwitterBot():
     while True:
       self.scrape_tweets()
       print("method got crashed. running again")
+      sys.stdout.flush()
         
-    print("1st loop crashed")  
+    print("1st loop crashed")
+    sys.stdout.flush()
     
 
 import config 
