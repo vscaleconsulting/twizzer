@@ -125,7 +125,7 @@ class VscaleTwitterBot():
         scrapped_values = self.binder(link[0])
         # print(scrapped_values)
         self.result_worksheet.append_row(scrapped_values)
-        time.sleep(1)
+        time.sleep(1.5)
       
         
     except Exception as e:
