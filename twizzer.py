@@ -169,7 +169,9 @@ consumer_secret = config.consumer_secret
 callback_uri = config.callback_uri  
 spredsheet_url = config.spredsheet_url
 
-
+#clear heroku logs
+with open("logs.txt","w")as f:
+  f.write(" ")
 bot = VscaleTwitterBot("cred.json",spredsheet_url,consumer_key,consumer_secret,callback_uri)        
 
 bot.run_twizzer()
