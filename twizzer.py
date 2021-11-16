@@ -16,7 +16,7 @@ class VscaleTwitterBot():
     '''
     self.tweet_links = []
     self.result_worksheet = None #result worksheet object
-    self.scraped_till = 54
+    self.scraped_till = 2
     
     self.spreadsheet_url = spreadsheet_url
     self.gc = gspread.service_account(filename=gc_credential_file_name)
@@ -169,8 +169,9 @@ callback_uri = config.callback_uri
 spredsheet_url = config.spredsheet_url
 
 #clear heroku logs
-with open("logs.txt","w")as f:
+with open("logs.txt","w") as f:
   f.write(" ")
+  
 bot = VscaleTwitterBot("cred.json",spredsheet_url,consumer_key,consumer_secret,callback_uri)        
 
 bot.run_twizzer()
