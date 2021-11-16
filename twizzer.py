@@ -134,13 +134,13 @@ class VscaleTwitterBot():
     '''
       twizzer -> main method of the instance, help's bot in running infinitely 
     '''
+    
     while True:
-      while True:
-        self.scrape_tweets()
-        print("method got crashed. running again")
+      self.scrape_tweets()
+      print("method got crashed. running again")
         
-      print("1st loop crashed")  
-    print("2nd loop crashed")
+    print("1st loop crashed")  
+    
 
 import config 
 
