@@ -16,12 +16,13 @@ class VscaleTwitterBot():
     '''
     self.tweet_links = []
     self.result_worksheet = None #result worksheet object
-    self.scraped_till = 2
+    self.scraped_till = 55
     
     self.spreadsheet_url = spreadsheet_url
     self.gc = gspread.service_account(filename=gc_credential_file_name)
     self.tweepy_credentials = {
       'consumer_key':tweepy_consumer_key,
+      
       'consumer_secret_key':tweepy_consumer_secret,
       'callback_url':tweepy_callback_uri
     } 
@@ -98,7 +99,7 @@ class VscaleTwitterBot():
                         this row
     '''
     gsheet = self.gc.open_by_url(self.spreadsheet_url)
-    spreadsheet_response = gsheet.values_get(f"Form Responses 1!E{self.scraped_till}:E")
+    spreadsheet_response = gsheet.values_get(f"Form Responses 1!A{self.scraped_till}:A")
     
     if 'values' in spreadsheet_response:        
       self.scraped_till += len(spreadsheet_response)-1
@@ -114,21 +115,14 @@ class VscaleTwitterBot():
       print("no new values appended")
       return 
     
-    api_call_counts = 0
+  
     try:
-      for link in self.tweet_links[:9]:
+      for link in self.tweet_links:
         scrapped_values = self.binder(link[0])
-        print(scrapped_values)
+        # print(scrapped_values)
         self.result_worksheet.append_row(scrapped_values)
+        time.sleep(1)
       
-        if api_call_counts==900:
-          time.sleep(910) #api call limit run after every 15min as per my research
-          api_call_counts = 0 # reset counter
-
-        elif api_call_counts%10==0:
-          time.sleep(2) #10 req per sec 
-        
-        api_call_counts+=1
         
     except Exception as e:
       print(e,"exception from scrape tweets method")
@@ -140,25 +134,29 @@ class VscaleTwitterBot():
     '''
       twizzer -> main method of the instance, help's bot in running infinitely 
     '''
-    
     while True:
-      self.scrape_tweets()
-      time.sleep(1)
-    
-import os
-from dotenv import load_dotenv
-load_dotenv()
+      while True:
+        self.scrape_tweets()
+        print("method got crashed. running again")
+        
+      print("1st loop crashed")  
+    print("2nd loop crashed")
+
+import config 
 
 
-consumer_key = os.getenv('consumer_key')
-consumer_secret = os.getenv('consumer_secret')
-callback_uri = os.getenv('callback_uri')   
-spredsheet_url = os.getenv('spredsheet_url') 
 
 
-bot = VscaleTwitterBot("twizzer/cred.json",spredsheet_url,consumer_key,consumer_secret,callback_uri)        
+consumer_key = config.consumer_key
+consumer_secret = config.consumer_secret
+callback_uri = config.callback_uri  
+spredsheet_url = config.spredsheet_url
+
+
+bot = VscaleTwitterBot("cred.json",spredsheet_url,consumer_key,consumer_secret,callback_uri)        
 
 bot.run_twizzer()
+
    
 
 
