@@ -104,6 +104,7 @@ class VscaleTwitterBot():
     
 #     if 'values' in output_sheet_filled_till_response:
     self.scraped_till += len(output_sheet_filled_till_response['values']) 
+    print(self.scraped_till)
     
     if 'values' in spreadsheet_response:        
 #       self.scraped_till += len(spreadsheet_response['values'])-1
