@@ -55,7 +55,7 @@ class VscaleTwitterBot():
 
     try:
       api = self.get_api()
-      tweet = api.get_status(tweet_id)._json
+      tweet = api.get_status(tweet_id,tweet_mode='extended')._json
       influencer_status_id = tweet["in_reply_to_status_id_str"]
 
       
