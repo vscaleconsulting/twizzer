@@ -145,6 +145,7 @@ class VscaleTwitterBot():
     while True:
       self.scrape_tweets()
       print("method got crashed. running again")
+      time.sleep(5)
       
     print("loop crashed")  
     
@@ -166,7 +167,7 @@ bot.run_twizzer()
    
 
 
-
+#end
 
 
 
