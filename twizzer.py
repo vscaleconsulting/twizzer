@@ -102,9 +102,9 @@ class VscaleTwitterBot():
     spreadsheet_response = gsheet.values_get(f"Form Responses 1!A{self.scraped_till}:A")
     output_sheet_filled_till_response = gsheet.values_get(f"Output!A1:A")
     
-    if 'values' in output_sheet_filled_till_response:
-      self.scraped_till += len(output_sheet_filled_till_response['values']) 
-      print(output_sheet_filled_till_response['values'])  
+#     if 'values' in output_sheet_filled_till_response:
+#       self.scraped_till += len(output_sheet_filled_till_response['values']) 
+#       print(output_sheet_filled_till_response['values'])  
     
     if 'values' in spreadsheet_response:        
 #       self.scraped_till += len(spreadsheet_response['values'])-1
