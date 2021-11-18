@@ -107,7 +107,7 @@ class VscaleTwitterBot():
 #     print(self.scraped_till)
     
     if 'values' in spreadsheet_response:        
-      self.scraped_till += len(spreadsheet_response['values'])-1+
+      self.scraped_till += len(spreadsheet_response['values'])-1
       self.tweet_links = spreadsheet_response['values']
       self.result_worksheet = gsheet.worksheets()[1]    
       return " "
