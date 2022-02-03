@@ -1,3 +1,8 @@
+""""
+Author: Swapnil Shinde
+Vscale Consulting LLP
+"""
+
 import tweepy
 import gspread
 import time
